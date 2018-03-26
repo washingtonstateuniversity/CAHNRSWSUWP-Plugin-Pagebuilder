@@ -694,7 +694,7 @@ display: none;
 }
 
 .cpb-faq dt {
-isplay: block;
+	display: block;
 	margin:0;
 	padding: 1rem;
 	font-size: 1.1rem;
