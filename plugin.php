@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: CAHNRS Pagebuilder 3.0
+Plugin Name: CAHNRS WSUWP Pagebuilder 3.0
 Version: 3.0.0
 Description: Builds customizable page layouts
 Author: washingtonstateuniversity, cahnrscommunications, Danial Bleile
