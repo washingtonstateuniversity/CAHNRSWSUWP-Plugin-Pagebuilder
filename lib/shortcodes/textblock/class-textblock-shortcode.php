@@ -221,11 +221,13 @@ class Textblock {
 	*/
 	private function get_more_content( $content, $settings ) {
 
+		$temp_id = 'textblock-' . uniqid();
+
 		if ( strpos( $content, '<span id="more-' ) !== false ) {
 
 			$content_parts = preg_split( '/<span id="more-.*?"><\/span>/', $content );
 
-			$link = '<div id="' . $this->get_id() . '" class="cpb-more-button"><a href="#"><span>Continue Reading</span></a></div>';
+			$link = '<div id="' . $temp_id . '" class="cpb-more-button"><a href="#"><span>Continue Reading</span></a></div>';
 
 			$new_content = '<div class="cpb-more-content">';
 
