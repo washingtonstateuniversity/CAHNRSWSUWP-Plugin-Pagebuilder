@@ -2,7 +2,7 @@
 
 ?><div class="cpb-slideshow <?php echo esc_html( $atts['display_type'] ); ?>">
 	<div class="slides-wrapper">
-		<ul class="slides"><?php echo wp_kses_post( $slides ); ?></ul>
+		<?php // @codingStandardsIgnoreStart Already escaped ?><ul class="slides"><?php echo $slides ; ?></ul><?php // @codingStandardsIgnoreEnd ?>
 		<nav class="slideshow-primary"><a href="#" class="prev">Previous</a><a href="#" class="next">Next</a></nav>
 	</div>
 	<nav class="slideshow-secondary"></nav>
