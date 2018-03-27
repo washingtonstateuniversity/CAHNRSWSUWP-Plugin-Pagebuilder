@@ -71,18 +71,15 @@ class Column {
 		// Column index global - This is used in the column shortcode to get column number.
 		global $cpb_column_i;
 
-		$atts['index'] = $cpb_column_i;
-
 		// Check default settings
 		$settings = \shortcode_atts( $this->default_settings, $atts, 'column' );
+
+		$settings['index'] = $cpb_column_i;
 
 		// Set column classes
 		$classes = $this->get_column_classes( $settings );
 
 		$cpb_column_i++;
-
-		// Column index global - This is used in the column shortcode to get column number.
-		global $cpb_column_i;
 
 		// Column layout global
 		global $cpb_column_layout;
@@ -115,7 +112,43 @@ class Column {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $atts, $content ) {
+	public function get_shortcode_form( $id, $atts, $content ) {
+
+		$cpb_form = cpb_get_form_class();
+
+		$p_values = array(
+			'default' => 'Not Set',
+		);
+
+		$p = 0;
+
+		while ( $p < 5 ) {
+
+			$p_values[ $p . 'rem' ] = $p . 'rem';
+
+			$p = $p + 0.25;
+
+		} // end for
+
+		$basic = $cpb_form->select_field( cpb_get_input_name( $id, true, 'bgcolor' ), $atts['bgcolor'], $cpb_form->get_wsu_colors(), 'Background Color' );
+
+		$basic .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'textcolor' ), $atts['textcolor'], $cpb_form->get_wsu_colors(), 'Text Color' );
+
+		$layout = $cpb_form->select_field( cpb_get_input_name( $id, true, 'padding_top' ), $atts['padding_top'], $p_values, 'Padding Top' );
+
+		$layout .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'padding_bottom' ), $atts['padding_bottom'], $p_values, 'Padding Bottom' );
+
+		$layout .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'padding_left' ), $atts['padding_left'], $p_values, 'Padding Left' );
+
+		$layout .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'padding_right' ), $atts['padding_right'], $p_values, 'Padding Right' );
+
+		$adv = $cpb_form->text_field( cpb_get_input_name( $id, true, 'csshook' ), $atts['csshook'], 'CSS Hook' );
+
+		return array(
+			'Basic' => $basic,
+			'Layout' => $layout,
+			'Advanced' => $adv,
+		);
 
 	} // End get_shortcode_form
 

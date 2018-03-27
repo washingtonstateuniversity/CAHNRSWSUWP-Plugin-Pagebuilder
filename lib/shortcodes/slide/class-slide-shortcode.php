@@ -151,9 +151,9 @@ class Slide_Shortcode {
 		foreach ( $items as $item ) {
 
 			$active = ( 1 === $cpb_slideshow['i'] ) ? ' active-slide' : '';
-			$bg_image = $item['img'];
-			$img = '<img class="slide_img_bg" src="' . cpb_get_plugin_url( 'lib/images/spacer1x1.gif' ) . '" style="background-image:url( ' . $bg_image . ' )" />';
-			$link = ( $item['link'] ) ? '<a href="' . $item['link'] . '" class="slide-link" /></a>' : '';
+			$bg_image = esc_url( $item['img'] );
+			$img = '<img class="slide_img_bg" src="' . esc_url( cpb_get_plugin_url( 'lib/images/spacer1x1.gif' ) ) . '" style="background-image:url( ' . $bg_image . ' )" />';
+			$link = ( $item['link'] ) ? '<a href="' . esc_url( $item['link'] ) . '" class="slide-link" /></a>' : '';
 			$title = $item['title'];
 			$excerpt = wp_trim_words( $item['excerpt'], 35 );
 
