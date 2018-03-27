@@ -17,6 +17,7 @@ class Social_Shortcode {
 	protected $default_settings = array(
 		'twitter'          => '',
 		'twitter_order'    => '',
+		'facebook'         => '',
 		'facebook_order'   => '',
 		'instagram'        => '',
 		'instagram_order'  => '',
