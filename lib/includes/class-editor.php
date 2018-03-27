@@ -30,7 +30,7 @@ class Editor {
 	protected function add_actions() {
 
 		// Add editor to edit post page
-		\add_action( 'edit_form_after_title', array( $this, 'add_editor' ), 1 );
+		\add_action( 'edit_form_after_title', array( $this, 'add_editor' ), 2 );
 
 	} // End add_actions
 
