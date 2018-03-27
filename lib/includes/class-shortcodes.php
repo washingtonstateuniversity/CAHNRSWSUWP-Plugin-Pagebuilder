@@ -81,8 +81,17 @@ class Shortcodes {
 		// Add textblock Shortcode
 		include_once cpb_get_plugin_path( '/lib/shortcodes/textblock/class-textblock-shortcode.php' );
 
+		// Add Image shortcode
+		include_once cpb_get_plugin_path( '/lib/shortcodes/subtitle/class-subtitle-shortcode.php' );
+
 		// Add action Shortcode
 		include_once cpb_get_plugin_path( '/lib/shortcodes/action/class-action-shortcode.php' );
+
+		// Add Image shortcode
+		include_once cpb_get_plugin_path( '/lib/shortcodes/promo/class-promo-shortcode.php' );
+
+		// Add Image shortcode
+		include_once cpb_get_plugin_path( '/lib/shortcodes/social/class-social-shortcode.php' );
 
 		// Add Content Feed Shortcode
 		include_once cpb_get_plugin_path( '/lib/shortcodes/content-feed/class-content-feed-shortcode.php' );
@@ -103,9 +112,6 @@ class Shortcodes {
 		include_once cpb_get_plugin_path( '/lib/shortcodes/post-gallery/class-post-gallery-shortcode.php' );
 
 		// Add Image shortcode
-		include_once cpb_get_plugin_path( '/lib/shortcodes/promo/class-promo-shortcode.php' );
-
-		// Add Image shortcode
 		include_once cpb_get_plugin_path( '/lib/shortcodes/sidebar/class-sidebar-shortcode.php' );
 
 		// Add Image shortcode
@@ -113,9 +119,6 @@ class Shortcodes {
 
 		// Add Image shortcode
 		include_once cpb_get_plugin_path( '/lib/shortcodes/slideshow/class-slideshow-shortcode.php' );
-
-		// Add Image shortcode
-		include_once cpb_get_plugin_path( '/lib/shortcodes/subtitle/class-subtitle-shortcode.php' );
 
 		// Add Image shortcode
 		include_once cpb_get_plugin_path( '/lib/shortcodes/table/class-table-shortcode.php' );
@@ -127,7 +130,7 @@ class Shortcodes {
 		include_once cpb_get_plugin_path( '/lib/shortcodes/tabs/class-tabs-shortcode.php' );
 
 		// Add Image shortcode
-		include_once cpb_get_plugin_path( '/lib/shortcodes/social/class-social-shortcode.php' );
+		include_once cpb_get_plugin_path( '/lib/shortcodes/az-index/class-az-index-shortcode.php' );
 
 	} // End add_shortcodes
 
