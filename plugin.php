@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: CAHNRS WSUWP Pagebuilder 3.0
-Version: 3.0.2
+Version: 3.0.3
 Description: Builds customizable page layouts
 Author: washingtonstateuniversity, cahnrscommunications, Danial Bleile
 Author URI: http://cahnrs.wsu.edu/communications
