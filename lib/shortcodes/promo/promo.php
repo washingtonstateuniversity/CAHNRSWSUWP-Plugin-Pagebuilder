@@ -14,7 +14,7 @@
 			<div class="cpb-subtitle-wrapper"><div class="cpb-subtitle"><?php echo esc_html( $subtitle ); ?></div></div>
 	<?php endif; ?>
 	<?php if ( ! empty( $excerpt ) ) : ?>
-			<div class="cpb-copy-wrapper"><div class="cpb-copy"><?php echo esc_html( $excerpt ); ?></div></div>
+			<div class="cpb-copy-wrapper"><div class="cpb-copy"><?php echo wp_kses_post( $excerpt ); ?></div></div>
 	<?php endif; ?>
 	<?php if ( ! empty( $link ) ) : ?>
 		<div class="cpb-promo-link"><a href="<?php echo esc_url( $link ); ?>" >Visit <?php echo esc_html( $title ); ?></a></div>
