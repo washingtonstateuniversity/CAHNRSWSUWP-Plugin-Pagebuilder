@@ -62,13 +62,31 @@ class Editor {
 
 			$content_shortcodes = cpb_get_shortcodes_from_content( $post->post_content, array( 'row' ), 'row' );
 
+			$editor_type = $this->get_editor_type( $post->ID );
+
 			$options_editor = $this->get_options_editor( $post );
 
-			$layout_editor = $this->get_layout_editor( $content_shortcodes );
+			if ( 'builder' === $editor_type ) {
 
-			$form_editor = $this->get_form_editor( $content_shortcodes );
+				$layout_editor = $this->get_layout_editor( $content_shortcodes );
 
-			$excerpt_editor = $this->get_excerpt_editor( $post );
+				$form_editor = $this->get_form_editor( $content_shortcodes );
+
+				$excerpt_editor = $this->get_excerpt_editor( $post );
+
+				remove_post_type_support( $post->post_type, 'editor' );
+
+				remove_post_type_support( $post->post_type, 'excerpt' );
+
+			} else {
+
+				$layout_editor = '';
+
+				$form_editor = '';
+
+				$excerpt_editor = '';
+
+			} // End if
 
 			\ob_start();
 
@@ -227,7 +245,11 @@ class Editor {
 
 			$excerpt_type = 0;
 
-		} // End if
+		} else {
+
+			$excerpt_type = intval( $excerpt_type );
+
+		}// End if
 
 		$values = array( 'Default Excerpt', 'Custom Excerpt' );
 
@@ -298,6 +320,37 @@ class Editor {
 		return $html;
 
 	} // end get_add_row_form
+
+
+	/*
+	* @desc Get editor type from post id
+	* @since 3.0.4
+	*
+	* @param int $post_id Post ID
+	*
+	* @return string Name of editor to be used default | builder
+	*/
+	protected function get_editor_type( $post_id ){
+
+		$cpb = \get_post_meta( $post_id, '_cpb_pagebuilder', true );
+
+		if ( '' === $cpb ) {
+
+			$cpb = 'builder';
+
+		} elseif ( '0' === $cpb ) {
+
+			$cpb = 'default';
+
+		} elseif ( '1' === $cpb ) {
+
+			$cpb = 'builder';
+
+		}; // End if
+
+		return $cpb;
+
+	} // End get_editor_type
 
 
 } // End Editor
