@@ -31,13 +31,13 @@ class List_Shortcode {
 
 		$remote_query_defaults = cpb_get_remote_query_defaults();
 
-		$select_query_defautls = cpb_get_select_query_defaults();
+		$select_query_defaults = cpb_get_select_query_defaults();
 
 		$this->default_settings = array_merge(
 			$this->default_settings,
 			$local_query_defaults,
 			$remote_query_defaults,
-			$select_query_defautls
+			$select_query_defaults
 		);
 
 		\add_action( 'init', array( $this, 'register_shortcode' ) );
