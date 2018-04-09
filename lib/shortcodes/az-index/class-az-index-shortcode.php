@@ -210,13 +210,13 @@ class AZ_Index_Shortcode {
 
 		$html = '<div class="cpb-az-index-alpha-content">';
 
-		$has_active = false;
+		$has_active = true;
 
 		foreach ( $alpha_items as $key => $alpha_set ) {
 
 			$active = '';
 
-			if ( ! empty( $alpha_set ) && ! $has_active ) {
+			if ( ! empty( $alpha_set ) && $has_active ) {
 
 				$active = ' active';
 
@@ -224,19 +224,22 @@ class AZ_Index_Shortcode {
 
 			} // End if
 
-			$cols = array_chunk( $alpha_set, ceil( count( $alpha_items ) / 3 ) );
-
 			$html .= '<div class="cpb-az-index-alpha-set' . $active . '">';
 
-			foreach ( $cols as $column => $col_items ) {
+			if ( ! empty( $alpha_set ) ) {
 
-				ob_start();
+				$cols = array_chunk( $alpha_set, ceil( count( $alpha_set ) / 3 ) );
 
-				include __DIR__ . '/az-index.php';
+				foreach ( $cols as $column => $col_items ) {
 
-				$html .= ob_get_clean();
+					ob_start();
 
-			} // End foreach
+					include __DIR__ . '/az-index.php';
+
+					$html .= ob_get_clean();
+
+				} // End foreach
+			} // End if
 
 			$html .= '</div>';
 

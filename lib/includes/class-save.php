@@ -36,6 +36,15 @@ class Save {
 		// Get the pagebuilder settings
 		$settings = $this->get_settings( $post_id );
 
+		// Save selection
+		update_post_meta( $post_id, '_cpb_pagebuilder', $settings['_cpb_pagebuilder'] );
+
+		// Save excerpt choice
+		update_post_meta( $post_id, '_cpb_excerpt', $settings['_cpb_excerpt'] );
+
+		// Save excerpt choice
+		update_post_meta( $post_id, '_cpb_m_excerpt', $settings['_cpb_m_excerpt'] );
+
 		// If is set to builder and the layout isn't empty
 		if ( ( 'builder' === $settings['_cpb_pagebuilder'] ) && ! empty( $settings['_cpb']['layout'] ) ) {
 
