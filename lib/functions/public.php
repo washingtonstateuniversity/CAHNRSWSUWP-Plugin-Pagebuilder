@@ -1184,15 +1184,15 @@ function cpb_custom_excerpt( $post, $words = 35 ) {
 
 		if ( count( $words ) > $excerpt_length ) {
 
-				array_pop( $words );
+			array_pop( $words );
 
-				$text = implode( ' ', $words );
+			$text = implode( ' ', $words );
 
-				$text = $text . $excerpt_more;
+			$text = $text . $excerpt_more;
 
 		} else {
 
-				$text = implode( ' ', $words );
+			$text = implode( ' ', $words );
 
 		} // End if
 
