@@ -45,7 +45,6 @@ class Column {
 			'column',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
-				'sanitize_callback'     => array( $this, 'get_sanitize_shortcode_atts' ),
 				'editor_callback'       => array( $this, 'get_shortcode_editor' ), // Callback to render form
 				'allowed_children'      => 'in_column', // Allowed child shortcodes,
 				'default_shortcode'     => 'textblock', // Default to this if no children

@@ -83,7 +83,6 @@ class Row {
 			'row',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
-				'sanitize_callback'     => array( $this, 'get_sanitize_shortcode_atts' ),
 				'editor_callback'       => array( $this, 'get_shortcode_editor' ), // Callback to render form
 				'allowed_children'      => array( 'column' ), // Allowed child shortcodes
 				'default_shortcode'     => 'column', // Default to this if no children
@@ -268,54 +267,6 @@ class Row {
 		return $html;
 
 	} // End get_shortcode_form
-
-
-	/*
-	* @desc Get stanitized output for $atts
-	* @since 3.0.0
-	*
-	* @param array $atts Shortcode attributes
-	* @param string $content Shortcode content
-	*
-	* @return array Sanitized shortcode $atts
-	*/
-	public function get_sanitize_shortcode_atts( $settings ) {
-
-		$clean = array();
-
-		$text_fields = array(
-			'title',
-			'title_tag',
-			'layout',
-			'bgcolor',
-			'textcolor',
-			'padding',
-			'max_width',
-			'gutter',
-			'csshook',
-			'anchor',
-			'padding_top',
-			'padding_bottom',
-			'padding_left',
-			'padding_right',
-			'full_bleed',
-			'bg_src',
-			'min_height',
-		);
-
-		foreach ( $text_fields as $index => $field ) {
-
-			if ( isset( $settings[ $field ] ) ) {
-
-				$clean[ $field ] = sanitize_text_field( $settings[ $field ] );
-
-			} // End if
-		} // End foreach
-
-		return $clean;
-
-	} // End sanitize_shortcode
-
 
 	/*
 	* @desc Get shortcode for use in save
