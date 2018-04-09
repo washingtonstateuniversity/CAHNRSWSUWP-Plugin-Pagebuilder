@@ -330,7 +330,7 @@ class Editor {
 	*
 	* @return string Name of editor to be used default | builder
 	*/
-	protected function get_editor_type( $post_id ){
+	protected function get_editor_type( $post_id ) {
 
 		$cpb = \get_post_meta( $post_id, '_cpb_pagebuilder', true );
 
