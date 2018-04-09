@@ -952,6 +952,7 @@ function cpb_get_select_query_defaults( $prefix = '' ) {
 	$defaults = array(
 		$prefix . 'site_url'        => '',
 		$prefix . 'remote_items'    => '',
+		$prefix . 'post_ids'        => '',
 	);
 
 	return $defaults;
@@ -1107,3 +1108,96 @@ function cpb_get_public_posts( $post_types = array(), $as_options = false, $incl
 	return $posts;
 
 } // End cpb_get_posts
+
+/*
+* @desc Build CPB Item from given post or post ID
+* @since 3.0.4
+*
+* @param mixed int | WP_Post $post Post object or ID to build item from
+* @param string $image_size Default image size to use for featured image
+* @param bool $include_content Include post content in returned item
+*
+* @return array CPB post item
+*/
+function cpb_get_post_item( $post, $image_size = 'medium', $include_content = false ) {
+
+	$item = array();
+
+	if ( is_numeric( $post ) ) {
+
+		$post = get_post( $post );
+
+	} // End if
+
+	if ( isset( $post->ID ) ) {
+
+		$post_image_array = cpb_get_post_image_array( $post->ID, 'medium' );
+
+		if ( ! empty( $post_image_array ) ) {
+
+			$item['img'] = $post_image_array['src'];
+
+			$item['img_alt'] = $post_image_array['alt'];
+
+		} // End if
+
+		$item['title'] = get_the_title( $post->ID );
+
+		$item['excerpt'] = cpb_custom_excerpt( $post );
+
+		$item['link'] = get_post_permalink( $post->ID );
+
+	} // End if
+
+	return $item;
+
+} // End cpb_get_post_item
+
+/*
+* @desc Build custom excerpt from WP_Post object
+* @since 3.0.4
+*
+* @param WP_Post $post WP_Post object
+* @param int $words Count of words to return
+*
+* @return string Excerpt
+*/
+function cpb_custom_excerpt( $post, $words = 35 ) {
+
+	if ( ! empty( $post->post_excerpt ) ) {
+
+		return $post->post_excerpt;
+
+	} else {
+
+		$text = strip_shortcodes( $post->post_content );
+
+		$text = str_replace( ']]>', ']]&gt;', $text );
+
+		$text = wp_strip_all_tags( $text );
+
+		$excerpt_length = apply_filters( 'excerpt_length', $words );
+
+		$excerpt_more = apply_filters( 'excerpt_more', ' [...]' );
+
+		$words = preg_split( "/[\n\r\t ]+/", $text, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
+
+		if ( count( $words ) > $excerpt_length ) {
+
+				array_pop( $words );
+
+				$text = implode( ' ', $words );
+
+				$text = $text . $excerpt_more;
+
+		} else {
+
+				$text = implode( ' ', $words );
+
+		} // End if
+
+		return apply_filters( 'wp_trim_excerpt', $text, $post->post_content );
+
+	} // End if
+
+} // End cpb_custom_excerpt

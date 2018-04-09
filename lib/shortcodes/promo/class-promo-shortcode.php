@@ -45,12 +45,13 @@ class Promo_Shortcode {
 
 		$remote_query_defaults = cpb_get_remote_query_defaults();
 
-		$select_query_defautls = cpb_get_select_query_defaults();
+		$select_query_default = cpb_get_select_query_defaults();
 
 		$this->default_settings = array_merge(
 			$this->default_settings,
 			$local_query_defaults,
-			$remote_query_defaults
+			$remote_query_defaults,
+			$select_query_default
 		);
 
 		\add_action( 'init', array( $this, 'register_shortcode' ) );
@@ -160,8 +161,6 @@ class Promo_Shortcode {
 
 				} // End if
 
-				$request_url = $promo_item['link'] . '?cpb-get-template=lightbox';
-
 				$class = implode( ' ', $classes_array );
 
 				$img_src = ( ! empty( $promo_item['img'] ) ) ? $promo_item['img'] : '';
@@ -175,6 +174,8 @@ class Promo_Shortcode {
 				$excerpt = ( ! empty( $promo_item['excerpt'] ) ) ? $promo_item['excerpt'] : '';
 
 				$link = ( ! empty( $promo_item['link'] ) ) ? $promo_item['link'] : '';
+
+				$request_url = $link . '?cpb-get-template=lightbox';
 
 				\ob_start();
 
@@ -244,8 +245,13 @@ class Promo_Shortcode {
 
 		foreach ( $ids as $post_id ) {
 
-			$promo_items[] = cpb_get_post_item( $post_id, 'medium' );
+			$promo_item = cpb_get_post_item( $post_id, 'medium' );
 
+			if ( ! empty( $promo_item ) ) {
+
+				$promo_items[] = $promo_item;
+
+			} // end if
 		} // End foreach
 
 		return $promo_items;
