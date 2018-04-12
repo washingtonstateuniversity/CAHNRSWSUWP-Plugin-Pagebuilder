@@ -228,8 +228,11 @@ function cpb_get_shortcode( $slug, $atts = array(), $content = '', $get_children
 
 		} // End if
 
+		// Filter defaults
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $shortcode['default_atts'], $atts, $slug );
+
 		// Set the atts
-		$shortcode['atts'] = array_merge( $shortcode['default_atts'], $atts );
+		$shortcode['atts'] = array_merge( $default_atts, $atts );
 
 		// Set the id
 		$shortcode['id'] = $shortcode['slug'] . '_' . wp_rand( 100, 1000000000 );

@@ -37,7 +37,7 @@ class Table_Shortcode {
 
 		\add_shortcode( 'cpbtable', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'cpbtable' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'cpbtable' );
 
 		cpb_register_shortcode(
 			'cpbtable',
@@ -66,7 +66,7 @@ class Table_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'cpbtable' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'cpbtable' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'cpbtable' );

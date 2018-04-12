@@ -79,6 +79,8 @@ class Row {
 
 		\add_shortcode( 'row', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'row' );
+
 		cpb_register_shortcode(
 			'row',
 			$args = array(
@@ -86,7 +88,7 @@ class Row {
 				'editor_callback'       => array( $this, 'get_shortcode_editor' ), // Callback to render form
 				'allowed_children'      => array( 'column' ), // Allowed child shortcodes
 				'default_shortcode'     => 'column', // Default to this if no children
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => false, // Allow in column
 			)
 		);
@@ -116,8 +118,10 @@ class Row {
 		// Resetting column index to 1 since this is a new row
 		$cpb_column_i = 1;
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'row' );
+
 		// Check default settings
-		$settings = \shortcode_atts( $this->default_settings, $atts, 'row' );
+		$settings = \shortcode_atts( $default_atts, $atts, 'row' );
 
 		// Set global layout
 		$cpb_row_layout = $settings['layout'];

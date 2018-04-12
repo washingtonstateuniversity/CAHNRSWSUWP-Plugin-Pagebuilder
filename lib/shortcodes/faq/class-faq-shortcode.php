@@ -36,7 +36,7 @@ class FAQ_Shortcode {
 
 		\add_shortcode( 'faq', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'faq' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'faq' );
 
 		cpb_register_shortcode(
 			'faq',
@@ -66,7 +66,7 @@ class FAQ_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'faq' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'faq' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'faq' );

@@ -55,7 +55,7 @@ class Post_Gallery_Shortcode {
 
 		\add_shortcode( 'postgallery', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'postgallery' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'postgallery' );
 
 		cpb_register_shortcode(
 			'postgallery',
@@ -84,7 +84,7 @@ class Post_Gallery_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'postgallery' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'postgallery' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'postgallery' );

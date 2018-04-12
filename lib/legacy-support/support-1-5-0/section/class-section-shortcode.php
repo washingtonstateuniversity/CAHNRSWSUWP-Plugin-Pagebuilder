@@ -6,17 +6,15 @@ if ( ! defined( 'WPINC' ) ) {
 } // End if
 
 /*
-* @desc Class to handle Sidebar Shortcode
+* @desc Class to handle Section Shortcode
 * @since 3.0.0
 */
-class Sidebar_Shortcode {
+class Section_Shortcode {
 
 	protected $prefix = '';
 
 	// @var array $default_settings Array of default settings
-	protected $default_settings = array(
-		'sidebar_id' => '',
-	);
+	protected $default_settings = array();
 
 
 	public function __construct() {
@@ -27,23 +25,23 @@ class Sidebar_Shortcode {
 
 
 	/*
-	* @desc Register sidebar shortcode
+	* @desc Register section shortcode
 	* @since 3.0.0
 	*/
 	public function register_shortcode() {
 
-		\add_shortcode( 'sidebar', array( $this, 'get_rendered_shortcode' ) );
+		\add_shortcode( 'section', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'sidebar' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'section' );
 
 		cpb_register_shortcode(
-			'sidebar',
+			'section',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
-				'label'                 => 'Sidebar (Widgets)', // Label of the item
+				'label'                 => 'Section', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
 				'default_atts'          => $default_atts,
-				'in_column'             => true, // Allow in column
+				'in_column'             => false, // Allow in column
 			)
 		);
 
@@ -63,22 +61,12 @@ class Sidebar_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'sidebar' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'section' );
 
 		// Check default settings
-		$atts = \shortcode_atts( $default_atts, $atts, 'sidebar' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'section' );
 
-		if ( ! empty( $atts['sidebar_id'] ) ) {
-
-			ob_start();
-
-			dynamic_sidebar( $atts['sidebar_id'] );
-
-			$sidebar = ob_get_clean();
-
-			$html = do_shortcode( $sidebar );
-
-		} // end if
+		$html = do_shortcode( $content );
 
 		return $html;
 
@@ -96,24 +84,12 @@ class Sidebar_Shortcode {
 	*/
 	public function get_shortcode_form( $id, $settings, $content ) {
 
-		$cpb_form = cpb_get_form_class();
-
-		global $wp_registered_sidebars;
-
-		$sidebars = array( 0 => 'None' );
-
-		foreach ( $wp_registered_sidebars as $sidebar ) {
-
-			$sidebars[ $sidebar['id'] ] = $sidebar['name'];
-
-		} // end foreach
-
-		$form = $cpb_form->select_field( cpb_get_input_name( $id, true, 'sidebar_id' ), $settings['sidebar_id'], $sidebars, 'Select Sidebar' );
-
-		return $form;
+		return array(
+			'Basic'    => '',
+		);
 
 	} // End get_shortcode_form
 
-} // End Sidebar
+} // End Section
 
-$cpb_shortcode_sidebar = new Sidebar_Shortcode();
+$cpb_shortcode_section = new Section_Shortcode();

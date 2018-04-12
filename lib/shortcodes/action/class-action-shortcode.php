@@ -39,7 +39,7 @@ class Action {
 
 		\add_shortcode( 'action', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'action' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'action' );
 
 		cpb_register_shortcode(
 			'action',
@@ -68,7 +68,7 @@ class Action {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'action' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'action' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'action' );

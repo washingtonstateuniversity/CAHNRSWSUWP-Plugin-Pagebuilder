@@ -41,7 +41,7 @@ class Column {
 
 		\add_shortcode( 'column', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'column' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'column' );
 
 		cpb_register_shortcode(
 			'column',
@@ -72,7 +72,7 @@ class Column {
 		// Column index global - This is used in the column shortcode to get column number.
 		global $cpb_column_i;
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'column' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'column' );
 
 		// Check default settings
 		$settings = \shortcode_atts( $default_atts, $atts, 'column' );

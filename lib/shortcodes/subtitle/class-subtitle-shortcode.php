@@ -40,7 +40,7 @@ class Subtitle_Shortcode {
 
 		\add_shortcode( 'subtitle', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'subtitle' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'subtitle' );
 
 		cpb_register_shortcode(
 			'subtitle',
@@ -69,7 +69,7 @@ class Subtitle_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'subtitle' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'subtitle' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'subtitle' );

@@ -36,7 +36,7 @@ class Figure_Shortcode {
 
 		\add_shortcode( 'figure', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'figure' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'figure' );
 
 		cpb_register_shortcode(
 			'figure',
@@ -63,7 +63,7 @@ class Figure_Shortcode {
 	*/
 	public function get_rendered_shortcode( $atts, $content ) {
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'figure' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'figure' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'figure' );

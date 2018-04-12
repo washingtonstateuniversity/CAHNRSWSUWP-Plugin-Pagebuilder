@@ -42,7 +42,7 @@ class Social_Shortcode {
 
 		\add_shortcode( 'social', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'social' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'social' );
 
 		cpb_register_shortcode(
 			'social',
@@ -71,7 +71,7 @@ class Social_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'social' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'social' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'social' );

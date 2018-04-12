@@ -67,7 +67,7 @@ class Promo_Shortcode {
 
 		\add_shortcode( 'promo', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'promo' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'promo' );
 
 		cpb_register_shortcode(
 			'promo',
@@ -96,7 +96,7 @@ class Promo_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'promo' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'promo' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'promo' );

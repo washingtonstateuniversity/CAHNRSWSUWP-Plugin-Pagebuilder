@@ -45,7 +45,7 @@ class Content_Feed_Shortcode {
 
 		\add_shortcode( 'content_feed', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'content_feed' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'content_feed' );
 
 		cpb_register_shortcode(
 			'content_feed',
@@ -74,7 +74,7 @@ class Content_Feed_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'content_feed' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'content_feed' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'content_feed' );

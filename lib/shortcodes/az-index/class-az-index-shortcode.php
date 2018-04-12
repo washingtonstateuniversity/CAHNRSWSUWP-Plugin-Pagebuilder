@@ -44,7 +44,7 @@ class AZ_Index_Shortcode {
 
 		\add_shortcode( 'az_index', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'az_index' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'az_index' );
 
 		cpb_register_shortcode(
 			'az_index',
@@ -73,7 +73,7 @@ class AZ_Index_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'az_index' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'az_index' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'az_index' );

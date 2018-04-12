@@ -35,7 +35,7 @@ class Video_Shortcode {
 
 		\add_shortcode( 'video', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'video' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'video' );
 
 		cpb_register_shortcode(
 			'video',
@@ -65,7 +65,7 @@ class Video_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'video' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'video' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'video' );

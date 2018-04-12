@@ -63,7 +63,7 @@ class Slide_Shortcode {
 
 		\add_shortcode( 'slide', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'slide' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'slide' );
 
 		cpb_register_shortcode(
 			'slide',
@@ -92,7 +92,7 @@ class Slide_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'slide' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'slide' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'slide' );

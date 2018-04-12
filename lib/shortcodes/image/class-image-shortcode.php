@@ -37,7 +37,7 @@ class Image_Shortcode {
 
 		\add_shortcode( 'image', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'image' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'image' );
 
 		cpb_register_shortcode(
 			'image',
@@ -66,7 +66,7 @@ class Image_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'image' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'image' );
 
 		// Check default settings
 		$atts = \shortcode_atts( $default_atts, $atts, 'image' );

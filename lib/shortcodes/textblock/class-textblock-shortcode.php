@@ -39,7 +39,7 @@ class Textblock {
 
 		\add_shortcode( 'textblock', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'textblock' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'textblock' );
 
 		cpb_register_shortcode(
 			'textblock',
@@ -68,7 +68,7 @@ class Textblock {
 	*/
 	public function get_rendered_shortcode( $atts, $content ) {
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'textblock' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'textblock' );
 
 		// Check default settings
 		$settings = \shortcode_atts( $default_atts, $atts, 'textblock' );
