@@ -39,13 +39,15 @@ class Action {
 
 		\add_shortcode( 'action', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'action' );
+
 		cpb_register_shortcode(
 			'action',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Action Button', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -66,8 +68,10 @@ class Action {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'action' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'action' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'action' );
 
 		$class_array = array( 'cpb-action-button', 'cpb-action-button-item' );
 

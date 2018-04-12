@@ -37,13 +37,15 @@ class Image_Shortcode {
 
 		\add_shortcode( 'image', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'image' );
+
 		cpb_register_shortcode(
 			'image',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Image', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -64,8 +66,10 @@ class Image_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'image' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'image' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'image' );
 
 		if ( ! empty( $atts['img_id'] ) ) {
 

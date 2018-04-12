@@ -67,13 +67,15 @@ class Promo_Shortcode {
 
 		\add_shortcode( 'promo', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'promo' );
+
 		cpb_register_shortcode(
 			'promo',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Promo', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -94,8 +96,10 @@ class Promo_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'promo' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'promo' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'promo' );
 
 		$promo_items = array();
 

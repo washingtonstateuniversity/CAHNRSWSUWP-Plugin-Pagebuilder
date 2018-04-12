@@ -37,13 +37,15 @@ class Table_Shortcode {
 
 		\add_shortcode( 'cpbtable', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'cpbtable' );
+
 		cpb_register_shortcode(
 			'cpbtable',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Table', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -64,8 +66,10 @@ class Table_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'cpbtable' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'cpbtable' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'cpbtable' );
 
 		$img_src = $atts['img_src'];
 

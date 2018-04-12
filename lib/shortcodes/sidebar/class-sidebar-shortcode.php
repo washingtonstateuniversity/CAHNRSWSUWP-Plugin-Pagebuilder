@@ -34,13 +34,15 @@ class Sidebar_Shortcode {
 
 		\add_shortcode( 'sidebar', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'sidebar' );
+
 		cpb_register_shortcode(
 			'sidebar',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Sidebar (Widgets)', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -61,8 +63,10 @@ class Sidebar_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'sidebar' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'sidebar' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'sidebar' );
 
 		if ( ! empty( $atts['sidebar_id'] ) ) {
 

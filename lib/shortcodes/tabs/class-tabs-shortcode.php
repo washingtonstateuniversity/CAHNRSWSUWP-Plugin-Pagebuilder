@@ -54,13 +54,15 @@ class Tabs_Shortcode {
 
 		\add_shortcode( 'cpbtabs', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'cpbtabs' );
+
 		cpb_register_shortcode(
 			'cpbtabs',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Tabs', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -79,8 +81,10 @@ class Tabs_Shortcode {
 	*/
 	public function get_rendered_shortcode( $atts, $content ) {
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, 'cpbtabs' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'cpbtabs' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'cpbtabs' );
 
 		$html = '<div class="cpb-item-tabs display-' . $atts['display'] . '">';
 
