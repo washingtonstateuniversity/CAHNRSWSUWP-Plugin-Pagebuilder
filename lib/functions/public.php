@@ -670,12 +670,15 @@ function cpb_get_editor_form_html( $shortcode ) {
 
 	if ( $shortcode['form_callback'] ) {
 
+		$cpb_form = cpb_get_form_class();
+
 		$form_content = call_user_func_array(
 			$shortcode['form_callback'],
 			array(
 				$shortcode['id'],
 				$shortcode['atts'],
 				$shortcode['content'],
+				$cpb_form,
 			)
 		);
 
