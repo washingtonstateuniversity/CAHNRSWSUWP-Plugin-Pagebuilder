@@ -194,7 +194,7 @@ class Slide_Shortcode {
 
 		}// End if
 
-		$promo_item['title'] = ( ! empty( $settings['promo_title'] ) ) ? $settings['promo_title'] : '';
+		$promo_item['title'] = ( ! empty( $settings['item_title'] ) ) ? $settings['item_title'] : '';
 
 		$promo_item['subtitle'] = ( ! empty( $settings['subtitle'] ) ) ? $settings['subtitle'] : '';
 
