@@ -63,13 +63,15 @@ class Slide_Shortcode {
 
 		\add_shortcode( 'slide', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'slide' );
+
 		cpb_register_shortcode(
 			'slide',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Slide', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -90,8 +92,10 @@ class Slide_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'slide' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'slide' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'slide' );
 
 		$items = array();
 
@@ -190,7 +194,7 @@ class Slide_Shortcode {
 
 		}// End if
 
-		$promo_item['title'] = ( ! empty( $settings['promo_title'] ) ) ? $settings['promo_title'] : '';
+		$promo_item['title'] = ( ! empty( $settings['item_title'] ) ) ? $settings['item_title'] : '';
 
 		$promo_item['subtitle'] = ( ! empty( $settings['subtitle'] ) ) ? $settings['subtitle'] : '';
 
@@ -242,7 +246,7 @@ class Slide_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 

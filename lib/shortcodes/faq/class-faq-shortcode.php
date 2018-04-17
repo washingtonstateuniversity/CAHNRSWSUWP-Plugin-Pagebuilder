@@ -36,13 +36,15 @@ class FAQ_Shortcode {
 
 		\add_shortcode( 'faq', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'faq' );
+
 		cpb_register_shortcode(
 			'faq',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'FAQ', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 				'uses_wp_editor'        => true, // Uses WP Editor
 			)
@@ -64,8 +66,10 @@ class FAQ_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'faq' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'faq' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'faq' );
 
 		$tag = $atts['tag'];
 
@@ -93,7 +97,7 @@ class FAQ_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 

@@ -6,20 +6,15 @@ if ( ! defined( 'WPINC' ) ) {
 } // End if
 
 /*
-* @desc Class to handle Table Shortcode
+* @desc Class to handle Section Shortcode
 * @since 3.0.0
 */
-class Table_Shortcode {
+class Section_Shortcode {
 
 	protected $prefix = '';
 
 	// @var array $default_settings Array of default settings
-	protected $default_settings = array(
-		'img_src'   => '',
-		'img_id'    => '',
-		'caption'   => '',
-		'alt'       => '',
-	);
+	protected $default_settings = array();
 
 
 	public function __construct() {
@@ -30,23 +25,23 @@ class Table_Shortcode {
 
 
 	/*
-	* @desc Register table shortcode
+	* @desc Register section shortcode
 	* @since 3.0.0
 	*/
 	public function register_shortcode() {
 
-		\add_shortcode( 'cpbtable', array( $this, 'get_rendered_shortcode' ) );
+		\add_shortcode( 'section', array( $this, 'get_rendered_shortcode' ) );
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'cpbtable' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'section' );
 
 		cpb_register_shortcode(
-			'cpbtable',
+			'section',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
-				'label'                 => 'Table', // Label of the item
+				'label'                 => 'Section', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
 				'default_atts'          => $default_atts,
-				'in_column'             => true, // Allow in column
+				'in_column'             => false, // Allow in column
 			)
 		);
 
@@ -66,26 +61,12 @@ class Table_Shortcode {
 
 		$html = '';
 
-		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'cpbtable' );
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'section' );
 
 		// Check default settings
-		$atts = \shortcode_atts( $default_atts, $atts, 'cpbtable' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'section' );
 
-		$img_src = $atts['img_src'];
-
-		$caption = $atts['caption'];
-
-		$alt = $atts['alt'];
-
-		if ( ! empty( $img_src ) ) {
-
-			ob_start();
-
-			include __DIR__ . '/table.php';
-
-			$html .= ob_get_clean();
-
-		} // End if
+		$html = do_shortcode( $content );
 
 		return $html;
 
@@ -103,18 +84,12 @@ class Table_Shortcode {
 	*/
 	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
-		$cpb_form = cpb_get_form_class();
-
-		$form = $cpb_form->insert_media( cpb_get_input_name( $id, true ), $settings );
-
-		$form .= '<hr/>';
-
-		$form .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'caption' ), $settings['caption'], 'Caption' );
-
-		return $form;
+		return array(
+			'Basic'    => '',
+		);
 
 	} // End get_shortcode_form
 
-} // End Table
+} // End Section
 
-$cpb_shortcode_table = new Table_Shortcode();
+$cpb_shortcode_section = new Section_Shortcode();

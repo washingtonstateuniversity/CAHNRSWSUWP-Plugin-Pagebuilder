@@ -53,13 +53,15 @@ class List_Shortcode {
 
 		\add_shortcode( 'list', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'list' );
+
 		cpb_register_shortcode(
 			'list',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Post/Page List', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -80,8 +82,10 @@ class List_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'list' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'list' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'list' );
 
 		$post_items = array();
 
@@ -142,7 +146,7 @@ class List_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 

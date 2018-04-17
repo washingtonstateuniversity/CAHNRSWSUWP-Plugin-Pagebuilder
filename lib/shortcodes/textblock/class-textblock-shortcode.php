@@ -39,6 +39,8 @@ class Textblock {
 
 		\add_shortcode( 'textblock', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'textblock' );
+
 		cpb_register_shortcode(
 			'textblock',
 			$args = array(
@@ -46,7 +48,7 @@ class Textblock {
 				'sanitize_callback'     => array( $this, 'get_sanitize_shortcode_atts' ),
 				'label'                 => 'Textblock', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 				'uses_wp_editor'        => true, // Uses WP Editor
 			)
@@ -66,8 +68,10 @@ class Textblock {
 	*/
 	public function get_rendered_shortcode( $atts, $content ) {
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'textblock' );
+
 		// Check default settings
-		$settings = \shortcode_atts( $this->default_settings, $atts, 'textblock' );
+		$settings = \shortcode_atts( $default_atts, $atts, 'textblock' );
 
 		$content = do_shortcode( $this->get_more_content( $content, $settings ) );
 
@@ -100,7 +104,7 @@ class Textblock {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 
@@ -134,34 +138,6 @@ class Textblock {
 		);
 
 	} // End get_shortcode_form
-
-
-	/*
-	* @desc Get stanitized output for $atts
-	* @since 3.0.0
-	*
-	* @param array $atts Shortcode attributes
-	* @param string $content Shortcode content
-	*
-	* @return array Sanitized shortcode $atts
-	*/
-	public function get_sanitize_shortcode_atts( $atts ) {
-
-	} // End sanitize_shortcode
-
-
-	/*
-	* @desc Get shortcode for use in save
-	* @since 3.0.0
-	*
-	* @param array $atts Shortcode attributes
-	* @param string $content Shortcode content
-	*
-	* @return string Shortcode for saving in content
-	*/
-	public function get_to_shortcode( $atts, $content ) {
-
-	} // End
 
 
 	/*
