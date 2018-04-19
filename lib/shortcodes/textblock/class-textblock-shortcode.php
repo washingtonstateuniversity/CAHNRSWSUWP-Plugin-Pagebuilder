@@ -75,7 +75,7 @@ class Textblock {
 
 		$content = do_shortcode( $this->get_more_content( $content, $settings ) );
 
-		$content = apply_filters( 'cpb_the_content', $content );
+		//$content = apply_filters( 'cpb_the_content', $content );
 
 		//TO DO: Need to work out applying the content filter here
 
