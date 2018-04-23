@@ -18,6 +18,7 @@ class FAQ_Shortcode {
 		'title'     => '',
 		'tag'       => 'span',
 		'textcolor' => '',
+		'csshook'   => '',
 	);
 
 
@@ -117,6 +118,8 @@ class FAQ_Shortcode {
 			$cpb_form->get_wsu_colors(),
 			'Text Color'
 		);
+
+		$adv .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'csshook' ), $settings['csshook'], 'CSS Hook' );
 
 		return array(
 			'Basic' => $html,
