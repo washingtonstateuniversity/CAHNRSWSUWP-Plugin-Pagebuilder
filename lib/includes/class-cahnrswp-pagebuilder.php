@@ -68,7 +68,10 @@ class CAHNRSWP_Pagebuilder {
 		// Add Customizer Script
 		include cpb_get_plugin_path( '/lib/includes/class-customizer.php' );
 
-		add_filter( 'the_content', array( $this, 'do_remove_p' ), 1 );
+		// Add Legacy Support
+		include_once cpb_get_plugin_path( '/lib/includes/class-legacy-support.php' );
+
+		//add_filter( 'the_content', array( $this, 'do_remove_p' ), 1 );
 
 	} // End init_plugin
 

@@ -48,21 +48,20 @@ class Shortcodes {
 	*/
 	public function register_shortcodes() {
 
-		// Set shortcodes as global scope
-		global $pagebuilder_shortcodes;
-
-		if ( empty( $pagebuilder_shortcodes ) || ! is_array( $pagebuilder_shortcodes ) ) {
-
-			// Make sure this is set and is an array
-			$pagebuilder_shortcodes = array();
-
-		} // End if
-
 		/*
 		* Shortcodes can be added via cpb_shortcode filter or
 		* the cpb_register_shortcode() (lib/functions/public.php)  function
 		*/
-		$pagebuilder_shortcodes = \apply_filters( 'cpb_shortcodes', $pagebuilder_shortcodes );
+		$register_shortcodes = \apply_filters( 'cpb_shortcodes', array() );
+
+		if ( ! empty( $register_shortcodes ) ) {
+
+			foreach ( $register_shortcodes as $slug => $args ) {
+
+				cpb_register_shortcode( $slug, $args );
+
+			} // End foreach
+		} // End if
 
 	} // End add_shortcodes
 

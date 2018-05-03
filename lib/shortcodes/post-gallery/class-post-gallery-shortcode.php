@@ -55,13 +55,15 @@ class Post_Gallery_Shortcode {
 
 		\add_shortcode( 'postgallery', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'postgallery' );
+
 		cpb_register_shortcode(
 			'postgallery',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Post Gallery', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -82,8 +84,10 @@ class Post_Gallery_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'postgallery' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'postgallery' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'postgallery' );
 
 		$post_items = array();
 
@@ -168,7 +172,7 @@ class Post_Gallery_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 
