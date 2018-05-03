@@ -15,6 +15,8 @@ class List_Shortcode {
 
 	// @var array $default_settings Array of default settings
 	protected $default_settings = array(
+		'title'             => '',
+		'title_tag'         => 'h2',
 		'source_type'       => '',
 		'columns'           => '4',
 		'unset_excerpt'     => '0',
@@ -109,9 +111,17 @@ class List_Shortcode {
 
 			if ( ! empty( $post_items ) ) {
 
+				if ( ! empty( $atts['title'] ) ) {
+
+					$html .= '<' . $atts['title_tag'] . '>' . $atts['title'] . '</' . $atts['title_tag'] . '>';
+
+				} // End if
+
 				$html .= '<ul class="cpb-list cpb-item">';
 
 				foreach ( $post_items as $index => $post_item ) {
+
+					$post_item = cpb_check_advanced_display( $post_item, $atts );
 
 					$link = ( ! empty( $post_item['link'] ) ) ? $post_item['link'] : '';
 
@@ -197,7 +207,9 @@ class List_Shortcode {
 			'full'   => 'Full',
 		);
 
-		$display = $cpb_form->select_field( cpb_get_input_name( $id, true, 'excerpt_length' ), $settings['excerpt_length'], $excerpt_length, 'Summary Length' );
+		$display = $cpb_form->text_field( cpb_get_input_name( $id, true, 'title' ), $settings['title'], 'Title' );
+
+		$display .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'excerpt_length' ), $settings['excerpt_length'], $excerpt_length, 'Summary Length' );
 
 		$display .= '<hr/>';
 

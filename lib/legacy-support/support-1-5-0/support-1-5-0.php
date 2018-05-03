@@ -49,7 +49,9 @@ class Support_1_5_0 {
 			case 'promo':
 				$default_atts = $this->get_promo_default_atts( $default_atts, $atts );
 				break;
-
+			case 'list':
+				$default_atts = $this->get_list_default_atts( $default_atts, $atts );
+				break;
 		} // End switch
 
 		return $default_atts;
@@ -71,6 +73,34 @@ class Support_1_5_0 {
 		if ( ! empty( $atts['source'] ) ) {
 
 			$default_atts['promo_type'] = $atts['source'];
+
+		} // End if
+
+		return $default_atts;
+
+	} // End get_promo_default_atts
+
+
+	/*
+	* @desc Filter default atts to support legacy settings
+	* @since 3.0.5
+	*
+	* @param array $default_atts Default atts
+	* @param array $atts Set shortcode atts
+	*
+	* @return array Filtered default atts
+	*/
+	protected function get_list_default_atts( $default_atts, $atts ) {
+
+		if ( ! empty( $atts['source'] ) ) {
+
+			$default_atts['source_type'] = $atts['source'];
+
+		} // End if
+
+		if ( ! empty( $atts['hide_excerpt'] ) ) {
+
+			$default_atts['unset_excerpt'] = $atts['hide_excerpt'];
 
 		} // End if
 
