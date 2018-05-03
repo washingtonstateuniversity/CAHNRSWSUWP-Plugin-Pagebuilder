@@ -14,7 +14,7 @@ class Legacy_Support {
 
 	public function __construct() {
 
-		add_action( 'init', array( $this, 'add_legacy_support'), 9 );
+		add_action( 'init', array( $this, 'add_legacy_support' ), 9 );
 
 	} // End __construct
 
