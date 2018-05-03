@@ -76,11 +76,13 @@ class FAQ_Shortcode {
 
 		$title = $atts['title'];
 
+		$classes = $atts['csshook'];
+
 		$content = apply_filters( 'cpb_the_content', \do_shortcode( $content ) );
 
 		\ob_start();
 
-		include cpb_get_plugin_path( '/lib/displays/items/faq/faq.php' );
+		include __DIR__ . '/faq.php';
 
 		$html .= \ob_get_clean();
 
