@@ -15,7 +15,11 @@ class REST_Request {
 
 	public $response_body = false;
 
+	public $response_array = array();
+
 	public $request_query = array();
+
+	public $request_posts = array();
 
 	public $request_args = array(
 		'request_type'  => 'post',
@@ -28,6 +32,7 @@ class REST_Request {
 		'per_page'         => 10,
 		'set_cbp_post'  => true,
 		'cache_request' => true,
+		'add_embed'     => true,
 	);
 
 	/*
@@ -54,14 +59,15 @@ class REST_Request {
 	protected function do_post_request() {
 
 		$request_query = array(
-			'base_url'       => $this->$request_args['base_url'],
-			'request_base'   => $this->$request_args['request_base'],
-			'post_type'      => $this->$request_args['post_type'],
-			'post_id'        => $this->$request_args['post_id'],
+			'base_url'       => $this->request_args['base_url'],
+			'request_base'   => $this->request_args['request_base'],
+			'post_type'      => $this->request_args['post_type'],
+			'post_id'        => $this->request_args['post_id'],
+			'add_embed'      => $this->request_args['add_embed'],
 			'params'         => array(
-				'taxonomy'       => $this->$request_args['taxonomy'],
-				'term_ids'       => $this->$request_args['term_ids'],
-				'per_page'       => $this->$request_args['per_page'],
+				'taxonomy'       => $this->request_args['taxonomy'],
+				'term_ids'       => $this->request_args['term_ids'],
+				'per_page'       => $this->request_args['per_page'],
 			),
 		);
 
@@ -77,7 +83,18 @@ class REST_Request {
 
 			$this->response_body = wp_remote_retrieve_body( $response );
 
-			var_dump( $this->response_body );
+			$this->response_array = json_decode( $this->response_body, true );
+
+			if ( is_array( $this->response_array ) && $this->request_args['set_cbp_post'] ) {
+
+				include_once cpb_get_plugin_path( '/lib/classes/class-cpb-post.php' );
+
+				foreach ( $this->response_array as $index => $rest_response ) {
+
+					$this->request_posts[] = new CPB_Post( $rest_response, 'rest-response' );
+
+				} // End foreach
+			}
 
 		} // End if
 
@@ -107,6 +124,12 @@ class REST_Request {
 		}
 
 		$url .= '?' . http_build_query( $query_params );
+
+		if ( ! empty( $this->request_query['add_embed'] ) ) {
+
+			$url .= '&_embed';
+
+		} // End if
 
 		return $url;
 

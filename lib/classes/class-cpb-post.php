@@ -11,25 +11,28 @@ if ( ! defined( 'WPINC' ) ) {
 */
 class CPB_Post {
 
-	protected $post_title = '';
+	public $post_title = '';
 
-	protected $post_content = '';
+	public $post_content = '';
 
-	protected $post_content_raw = '';
+	public $post_content_raw = '';
 
-	protected $post_image_array = array(
-		'img_src'   => '',
-		'img_alt'   => '',
-		'img_id'    => '',
+	public $post_image_array = array(
+		'img_full_src'     => '',
+		'img_large_src'    => '',
+		'img_medium_src'   => '',
+		'img_thumb_src'    => '',
+		'img_alt'          => '',
+		'img_id'           => '',
 	);
 
-	protected $post_excerpt = '';
+	public $post_excerpt = '';
 
-	protected $post_id = '';
+	public $post_id = '';
 
-	protected $request_url = '';
+	public $post_type = '';
 
-	protected $post_type = '';
+	public $post_link = '';
 
 
 	/*
@@ -44,9 +47,6 @@ class CPB_Post {
 
 		switch ( $context ) {
 
-			case 'rest-query':
-				$this->set_from_rest_query( $post, $context, $args );
-				break;
 			case 'rest-response':
 				$this->set_from_rest_response( $post, $context, $args );
 				break;
@@ -63,30 +63,37 @@ class CPB_Post {
 	* @param string $context Context to build post from
 	* @param array $args Args to pass along to the build
 	*/
-	protected function set_from_rest_query( $post, $context, $args ) {
-
-	} // End set_from_rest_query
-
-
-	/*
-	* @desc Get REST response and set from response
-	*
-	* @param mixed $post Post data to build from. Eventually could be WP_Post, Post ID, REST Response, REST request query.
-	* @param string $context Context to build post from
-	* @param array $args Args to pass along to the build
-	*/
 	protected function set_from_rest_response( $post, $context, $args ) {
 
-		$default_args = array(
-			'request_url'   => '',
-			'request_base'  => 'wp-json/wp/v2',
-			'post_type'     => 'posts',
-			'taxonomy'      => 'categories',
-			'term_ids'      => array(),
-			'count'         => 10,
-		);
+		//var_dump( $post['post_images'] );
 
-		$args = array_merge( $default_args, $args );
+		if ( ! empty( $post['title']['rendered'] ) ) {
+
+			$this->post_title = $post['title']['rendered'];
+
+			$this->post_content = $post['content']['rendered'];
+
+			$this->post_excerpt = $post['excerpt']['rendered'];
+
+			$this->post_link = $post['link'];
+
+			$this->post_id = $post['id'];
+
+			// TO DO $post["_embedded"]['wp:featuredmedia'] to handle alt tags
+
+			if ( ! empty( $post['post_images'] ) ) {
+
+				$this->post_image_array = array(
+					'img_full_src'     => ( ! empty( $post['post_images']['full'] ) ) ? $post['post_images']['full'] : '',
+					'img_large_src'    => ( ! empty( $post['post_images']['large'] ) ) ? $post['post_images']['large'] : '',
+					'img_medium_src'   => ( ! empty( $post['post_images']['medium'] ) ) ? $post['post_images']['medium'] : '',
+					'img_thumb_src'    => ( ! empty( $post['post_images']['thumbnail'] ) ) ? $post['post_images']['thumbnail'] : '',
+					'img_alt'          => '',
+					'img_id'           => '',
+				);
+
+			} // End if
+		} // End if
 
 	} // End set_from_rest_query
 
