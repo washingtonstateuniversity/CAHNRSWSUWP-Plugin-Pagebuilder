@@ -946,6 +946,29 @@ function cpb_get_remote_query_defaults( $prefix = '' ) {
 
 
 /*
+* @desc Get generic defaults for remote rest query for use in shortcodes
+* @since 3.0.0
+*
+* @param string $prefix Prefix to add to default key
+*
+* @return array Defaults
+*/
+function cpb_get_rest_query_defaults( $prefix = '' ) {
+
+	$defaults = array(
+		$prefix . 'base_url'        => '',
+		$prefix . 'post_type'       => '',
+		$prefix . 'taxonomy'        => '',
+		$prefix . 'term_ids'        => '',
+		$prefix . 'per_page'        => '',
+	);
+
+	return $defaults;
+
+} // End cpb_get_rest_query_defaults
+
+
+/*
 * @desc Get generic defaults for set query for use in shortcodes
 * @since 3.0.0
 *
@@ -1207,3 +1230,83 @@ function cpb_custom_excerpt( $post, $words = 35 ) {
 	} // End if
 
 } // End cpb_custom_excerpt
+
+
+/*
+* @desc Build REST Query and get items
+* @since 3.0.4
+*
+* @param array $args Request args
+*
+* @return array CPB post items
+*/
+function cpb_get_rest_items( $args = array() ) {
+
+	$request_args = array(
+		'request_type'  => 'post',
+		'base_url'      => '',
+		'request_base'  => 'wp-json/wp/v2',
+		'post_type'     => 'posts',
+		'post_id'       => '',
+		'taxonomy'      => '',
+		'term_ids'      => array(),
+		'per_page'      => 10,
+		'set_cbp_post'  => true,
+		'cache_request' => true,
+	);
+
+	include_once cpb_get_plugin_path( '/lib/classes/class-rest-request.php' );
+
+	$request = new REST_Request( $args );
+
+	return $request->request_posts;
+
+} // End cpb_get_rest_items
+
+/*
+* @desc Convert array of CPB_Post objects to legacy post_items array
+* @since 3.0.4
+*
+* @param array $cpb_post_array Array of CPB_Post objects
+*
+* @return array Post_items array
+*/
+function cpb_convert_legacy_post_items( $cpb_post_array ) {
+
+	$post_items = array();
+
+	if ( is_array( $cpb_post_array ) ) {
+
+		foreach ( $cpb_post_array as $index => $cpb_post ) {
+
+			$post_items[] = cpb_convert_legacy_post_item( $cpb_post );
+
+		} // End foreach
+	} // End if
+
+	return $post_items;
+
+} // End cpb_get_rest_items
+
+
+/*
+* @desc Convert array of CPB_Post object to legacy post_item
+* @since 3.0.4
+*
+* @param instance CPB_Post
+*
+* @return array CPB post item
+*/
+function cpb_convert_legacy_post_item( $cpb_post ) {
+
+	$post_item = array(
+		'link' => $cpb_post->post_link,
+		'title' => $cpb_post->post_title,
+		'content' => $cpb_post->post_content,
+		'excerpt' => $cpb_post->post_excerpt,
+		'img' => $cpb_post->post_image_array['img_large_src'],
+	);
+
+	return $post_item;
+
+} // End cpb_get_rest_items

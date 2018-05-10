@@ -31,7 +31,7 @@ class Post_Gallery_Shortcode {
 
 		$local_query_defaults = cpb_get_local_query_defaults();
 
-		$remote_query_defaults = cpb_get_remote_query_defaults();
+		$remote_query_defaults = cpb_get_rest_query_defaults();
 
 		$select_query_defautls = cpb_get_select_query_defaults();
 
@@ -101,7 +101,8 @@ class Post_Gallery_Shortcode {
 					$post_items = $query->get_local_items( $atts, '' );
 					break;
 				case 'remote_feed':
-					$post_items = $query->get_remote_items_feed( $atts, '' );
+					$cpb_posts = cpb_get_rest_items( $atts );
+					$post_items = cpb_convert_legacy_post_items( $cpb_posts );
 					break;
 				default:
 					$post_items = array();
@@ -200,7 +201,7 @@ class Post_Gallery_Shortcode {
 			'selected' => $settings['source_type'],
 			'title'   => 'Feed (Another Site)',
 			'desc'    => 'Load external content by category or tag',
-			'form'    => $cpb_form->get_form_remote_feed( cpb_get_input_name( $id, true ), $settings ),
+			'form'    => $cpb_form->get_form_external_feed( cpb_get_input_name( $id, true ), $settings ),
 		);
 
 		$display = $cpb_form->select_field(
@@ -251,6 +252,7 @@ class Post_Gallery_Shortcode {
 		);
 
 	} // End get_shortcode_form
+
 
 } // End Post Gallery
 

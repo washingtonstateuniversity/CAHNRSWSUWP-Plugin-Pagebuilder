@@ -694,6 +694,28 @@ class Form {
 
 	}
 
+	public function get_form_external_feed( $base_name, $settings, $prefix = '' ) {
+
+		$form = '<div class="cpb-form-remote-feed" data-basename="' . $base_name . '[' . $prefix . 'remote_items]">';
+
+		$form .= $this->text_field( $base_name . '[' . $prefix . 'base_url]', $settings[ $prefix . 'base_url' ], 'Source URL', 'cpb-full-width' );
+
+		$form .= '<hr/>';
+
+		$form .= $this->text_field( $base_name . '[' . $prefix . 'post_type]', $settings[ $prefix . 'post_type' ], 'Post Type' );
+
+		$form .= $this->text_field( $base_name . '[' . $prefix . 'taxonomy]', $settings[ $prefix . 'taxonomy' ], 'Taxonomy' );
+
+		$form .= $this->text_field( $base_name . '[' . $prefix . 'term_ids]', $settings[ $prefix . 'term_ids' ], 'Category/Tag IDs (comma separated)' );
+
+		$form .= $this->text_field( $base_name . '[' . $prefix . 'per_page]', $settings[ $prefix . 'per_page' ], 'Number of Items' );
+
+		$form .= '</div>';
+
+		return $form;
+
+	}
+
 	public function get_form_remote_feed_clean( $settings, $prefix = '' ) {
 
 		$ca = array();
