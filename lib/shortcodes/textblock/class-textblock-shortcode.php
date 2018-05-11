@@ -45,7 +45,6 @@ class Textblock {
 			'textblock',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
-				'sanitize_callback'     => array( $this, 'get_sanitize_shortcode_atts' ),
 				'label'                 => 'Textblock', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
 				'default_atts'          => $default_atts,

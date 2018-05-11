@@ -451,7 +451,7 @@ class Save {
 			} // End foreach
 		} // End if
 
-		return \apply_filters( 'cpb_clean_atts', $clean_settings, $shortcode );
+		return \apply_filters( 'cpb_clean_atts', $clean_settings, $save_settings, $shortcode );
 
 	} // End get_save_settings
 
