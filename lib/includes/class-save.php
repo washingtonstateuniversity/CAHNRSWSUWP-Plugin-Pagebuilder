@@ -224,6 +224,8 @@ class Save {
 
 	protected function get_to_shortcode_recursive( $shortcode ) {
 
+		$shortcode = \apply_filters( 'cpb_to_shortcode', $shortcode );
+
 		// We'll add the built shortcodes here
 		$shortcode_string = '';
 
@@ -449,7 +451,7 @@ class Save {
 			} // End foreach
 		} // End if
 
-		return $clean_settings;
+		return \apply_filters( 'cpb_clean_atts', $clean_settings, $shortcode );
 
 	} // End get_save_settings
 
