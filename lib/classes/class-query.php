@@ -63,6 +63,8 @@ class Query {
 
 					$image = $this->get_local_image_array( $the_query->post->ID, $settings );
 
+					$image = apply_filters( 'cpb_image_array', $image, $the_query->post->ID );
+
 					$item['img'] = $image['src'];
 
 					$item['img_alt'] = $image['alt'];
