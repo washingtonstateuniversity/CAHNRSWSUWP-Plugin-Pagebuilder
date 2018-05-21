@@ -113,7 +113,7 @@ class List_Shortcode {
 
 				if ( ! empty( $atts['title'] ) ) {
 
-					$html .= '<' . $atts['title_tag'] . '>' . $atts['title'] . '</' . $atts['title_tag'] . '>';
+					$html .= '<' . esc_attr( $atts['title_tag'] ) . '>' . esc_html( $atts['title'] ) . '</' . esc_attr( $atts['title_tag'] ) . '>';
 
 				} // End if
 
