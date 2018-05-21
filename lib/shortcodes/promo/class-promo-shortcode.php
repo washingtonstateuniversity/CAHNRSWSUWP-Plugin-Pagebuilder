@@ -179,6 +179,8 @@ class Promo_Shortcode {
 
 				$link = ( ! empty( $promo_item['link'] ) ) ? $promo_item['link'] : '';
 
+				$event_date = ( ! empty( $promo_item['event_date'] ) ) ? $promo_item['event_date'] : '';
+
 				$request_url = $link . '?cpb-get-template=lightbox';
 
 				\ob_start();

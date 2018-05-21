@@ -39,7 +39,9 @@ class Query {
 
 				$the_query->the_post();
 
-				$item = array();
+				$item = array(
+					'event_date' => '',
+				);
 
 				if ( in_array( 'title', $fields, true ) ) {
 
@@ -76,6 +78,8 @@ class Query {
 					$item['link'] = \get_post_permalink();
 
 				}
+
+				$item = apply_filters( 'cpb_post_item_array_local_query', $item, $the_query->post );
 
 				$items[ $the_query->post->ID ] = $item;
 

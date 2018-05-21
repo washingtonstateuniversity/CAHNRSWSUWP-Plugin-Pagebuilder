@@ -21,6 +21,14 @@ class Customizer {
 
 	public function add_customizer_options( $wp_customize ) {
 
+		$wp_customize->add_setting(
+			'cpb_pre_filter',
+			array(
+				'default'   => '',
+				'transport' => 'refresh',
+			)
+		);
+
 		$post_types = $this->get_wp_post_types();
 
 		foreach ( $post_types as $type => $label ) {
@@ -43,13 +51,23 @@ class Customizer {
 
 		} // End forach
 
-			$wp_customize->add_section(
-				'cpb_options',
-				array(
-					'title'      => 'CAHNRS PageBuilder Options',
-					'priority'   => 30,
-				)
-			);
+		$wp_customize->add_section(
+			'cpb_options',
+			array(
+				'title'      => 'CAHNRS PageBuilder Options',
+				'priority'   => 30,
+			)
+		);
+
+		$wp_customize->add_control(
+			'cpb_pre_filter_control',
+			array(
+				'label'    => 'Pre Filter Content',
+				'section'  => 'cpb_options',
+				'settings' => 'cpb_pre_filter',
+				'type'     => 'checkbox',
+			)
+		);
 
 		foreach ( $post_types as $type => $label ) {
 

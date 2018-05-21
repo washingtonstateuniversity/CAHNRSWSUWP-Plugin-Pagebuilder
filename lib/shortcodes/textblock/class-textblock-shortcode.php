@@ -85,7 +85,7 @@ class Textblock {
 
 		\ob_start();
 
-		include __DIR__ . '/textblock.php';
+		include __DIR__ . '/textblock.min.php';
 
 		$html = \ob_get_clean();
 
