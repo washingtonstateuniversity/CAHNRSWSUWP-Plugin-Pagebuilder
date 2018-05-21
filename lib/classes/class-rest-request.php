@@ -94,8 +94,7 @@ class REST_Request {
 					$this->request_posts[] = new CPB_Post( $rest_response, 'rest-response' );
 
 				} // End foreach
-			}
-
+			} // End if
 		} // End if
 
 	} // End do_post_request
