@@ -36,13 +36,15 @@ class Figure_Shortcode {
 
 		\add_shortcode( 'figure', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'figure' );
+
 		cpb_register_shortcode(
 			'figure',
 			$args = array(
 				'label'                 => 'Figure/Caption', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -60,6 +62,11 @@ class Figure_Shortcode {
 	* @return string HTML shortcode output
 	*/
 	public function get_rendered_shortcode( $atts, $content ) {
+
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'figure' );
+
+		// Check default settings
+		$atts = \shortcode_atts( $default_atts, $atts, 'figure' );
 
 		$html = '';
 
@@ -91,7 +98,7 @@ class Figure_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $atts, $content ) {
+	public function get_shortcode_form( $id, $atts, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 

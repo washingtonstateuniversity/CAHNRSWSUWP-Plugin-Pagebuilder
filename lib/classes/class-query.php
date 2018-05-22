@@ -39,7 +39,9 @@ class Query {
 
 				$the_query->the_post();
 
-				$item = array();
+				$item = array(
+					'event_date' => '',
+				);
 
 				if ( in_array( 'title', $fields, true ) ) {
 
@@ -63,6 +65,8 @@ class Query {
 
 					$image = $this->get_local_image_array( $the_query->post->ID, $settings );
 
+					$image = apply_filters( 'cpb_image_array', $image, $the_query->post->ID );
+
 					$item['img'] = $image['src'];
 
 					$item['img_alt'] = $image['alt'];
@@ -74,6 +78,8 @@ class Query {
 					$item['link'] = \get_post_permalink();
 
 				}
+
+				$item = apply_filters( 'cpb_post_item_array_local_query', $item, $the_query->post );
 
 				$items[ $the_query->post->ID ] = $item;
 

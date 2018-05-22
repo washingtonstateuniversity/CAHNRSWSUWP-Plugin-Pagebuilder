@@ -15,6 +15,8 @@ class List_Shortcode {
 
 	// @var array $default_settings Array of default settings
 	protected $default_settings = array(
+		'title'             => '',
+		'title_tag'         => 'h2',
 		'source_type'       => '',
 		'columns'           => '4',
 		'unset_excerpt'     => '0',
@@ -53,13 +55,15 @@ class List_Shortcode {
 
 		\add_shortcode( 'list', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'list' );
+
 		cpb_register_shortcode(
 			'list',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Post/Page List', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -80,8 +84,10 @@ class List_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'list' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'list' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'list' );
 
 		$post_items = array();
 
@@ -105,9 +111,17 @@ class List_Shortcode {
 
 			if ( ! empty( $post_items ) ) {
 
+				if ( ! empty( $atts['title'] ) ) {
+
+					$html .= '<' . esc_attr( $atts['title_tag'] ) . '>' . esc_html( $atts['title'] ) . '</' . esc_attr( $atts['title_tag'] ) . '>';
+
+				} // End if
+
 				$html .= '<ul class="cpb-list cpb-item">';
 
 				foreach ( $post_items as $index => $post_item ) {
+
+					$post_item = cpb_check_advanced_display( $post_item, $atts );
 
 					$link = ( ! empty( $post_item['link'] ) ) ? $post_item['link'] : '';
 
@@ -142,7 +156,7 @@ class List_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 
@@ -193,7 +207,9 @@ class List_Shortcode {
 			'full'   => 'Full',
 		);
 
-		$display = $cpb_form->select_field( cpb_get_input_name( $id, true, 'excerpt_length' ), $settings['excerpt_length'], $excerpt_length, 'Summary Length' );
+		$display = $cpb_form->text_field( cpb_get_input_name( $id, true, 'title' ), $settings['title'], 'Title' );
+
+		$display .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'excerpt_length' ), $settings['excerpt_length'], $excerpt_length, 'Summary Length' );
 
 		$display .= '<hr/>';
 

@@ -31,7 +31,7 @@ class Post_Gallery_Shortcode {
 
 		$local_query_defaults = cpb_get_local_query_defaults();
 
-		$remote_query_defaults = cpb_get_remote_query_defaults();
+		$remote_query_defaults = cpb_get_rest_query_defaults();
 
 		$select_query_defautls = cpb_get_select_query_defaults();
 
@@ -55,13 +55,15 @@ class Post_Gallery_Shortcode {
 
 		\add_shortcode( 'postgallery', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'postgallery' );
+
 		cpb_register_shortcode(
 			'postgallery',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Post Gallery', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -82,8 +84,10 @@ class Post_Gallery_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'postgallery' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'postgallery' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'postgallery' );
 
 		$post_items = array();
 
@@ -97,7 +101,8 @@ class Post_Gallery_Shortcode {
 					$post_items = $query->get_local_items( $atts, '' );
 					break;
 				case 'remote_feed':
-					$post_items = $query->get_remote_items_feed( $atts, '' );
+					$cpb_posts = cpb_get_rest_items( $atts );
+					$post_items = cpb_convert_legacy_post_items( $cpb_posts );
 					break;
 				default:
 					$post_items = array();
@@ -168,7 +173,7 @@ class Post_Gallery_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 
@@ -196,7 +201,7 @@ class Post_Gallery_Shortcode {
 			'selected' => $settings['source_type'],
 			'title'   => 'Feed (Another Site)',
 			'desc'    => 'Load external content by category or tag',
-			'form'    => $cpb_form->get_form_remote_feed( cpb_get_input_name( $id, true ), $settings ),
+			'form'    => $cpb_form->get_form_external_feed( cpb_get_input_name( $id, true ), $settings ),
 		);
 
 		$display = $cpb_form->select_field(
@@ -247,6 +252,7 @@ class Post_Gallery_Shortcode {
 		);
 
 	} // End get_shortcode_form
+
 
 } // End Post Gallery
 

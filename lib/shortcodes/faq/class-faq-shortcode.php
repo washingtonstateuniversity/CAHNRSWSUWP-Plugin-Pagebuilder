@@ -18,6 +18,7 @@ class FAQ_Shortcode {
 		'title'     => '',
 		'tag'       => 'span',
 		'textcolor' => '',
+		'csshook'   => '',
 	);
 
 
@@ -36,13 +37,15 @@ class FAQ_Shortcode {
 
 		\add_shortcode( 'faq', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'faq' );
+
 		cpb_register_shortcode(
 			'faq',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'FAQ', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 				'uses_wp_editor'        => true, // Uses WP Editor
 			)
@@ -64,18 +67,22 @@ class FAQ_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'faq' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'faq' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'faq' );
 
 		$tag = $atts['tag'];
 
 		$title = $atts['title'];
 
+		$classes = $atts['csshook'];
+
 		$content = apply_filters( 'cpb_the_content', \do_shortcode( $content ) );
 
 		\ob_start();
 
-		include cpb_get_plugin_path( '/lib/displays/items/faq/faq.php' );
+		include __DIR__ . '/faq.php';
 
 		$html .= \ob_get_clean();
 
@@ -93,7 +100,7 @@ class FAQ_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 
@@ -113,6 +120,8 @@ class FAQ_Shortcode {
 			$cpb_form->get_wsu_colors(),
 			'Text Color'
 		);
+
+		$adv .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'csshook' ), $settings['csshook'], 'CSS Hook' );
 
 		return array(
 			'Basic' => $html,

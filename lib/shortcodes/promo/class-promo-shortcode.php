@@ -67,13 +67,15 @@ class Promo_Shortcode {
 
 		\add_shortcode( 'promo', array( $this, 'get_rendered_shortcode' ) );
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, array(), 'promo' );
+
 		cpb_register_shortcode(
 			'promo',
 			$args = array(
 				'form_callback'         => array( $this, 'get_shortcode_form' ),
 				'label'                 => 'Promo', // Label of the item
 				'render_callback'       => array( $this, 'get_rendered_shortcode' ), // Callback to render shortcode
-				'default_atts'          => $this->default_settings,
+				'default_atts'          => $default_atts,
 				'in_column'             => true, // Allow in column
 			)
 		);
@@ -94,8 +96,10 @@ class Promo_Shortcode {
 
 		$html = '';
 
+		$default_atts = apply_filters( 'cpb_shortcode_default_atts', $this->default_settings, $atts, 'promo' );
+
 		// Check default settings
-		$atts = \shortcode_atts( $this->default_settings, $atts, 'promo' );
+		$atts = \shortcode_atts( $default_atts, $atts, 'promo' );
 
 		$promo_items = array();
 
@@ -174,6 +178,8 @@ class Promo_Shortcode {
 				$excerpt = ( ! empty( $promo_item['excerpt'] ) ) ? $promo_item['excerpt'] : '';
 
 				$link = ( ! empty( $promo_item['link'] ) ) ? $promo_item['link'] : '';
+
+				$event_date = ( ! empty( $promo_item['event_date'] ) ) ? $promo_item['event_date'] : '';
 
 				$request_url = $link . '?cpb-get-template=lightbox';
 
@@ -280,7 +286,7 @@ class Promo_Shortcode {
 	*
 	* @return string HTML shortcode form output
 	*/
-	public function get_shortcode_form( $id, $settings, $content ) {
+	public function get_shortcode_form( $id, $settings, $content, $cpb_form ) {
 
 		$cpb_form = cpb_get_form_class();
 

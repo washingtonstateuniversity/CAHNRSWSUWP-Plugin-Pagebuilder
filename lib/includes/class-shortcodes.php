@@ -23,7 +23,43 @@ class Shortcodes {
 		// Add Registered shortcodes via filter
 		\add_action( 'init', array( $this, 'register_shortcodes' ), 99 );
 
+		\add_action( 'init', array( $this, 'check_pre_filter' ), 99 );
+
 	} // End __construct
+
+
+	/**
+	 * @desc Check if set to use pre-filter
+	 * @since 3.0.5
+	 */
+	public function check_pre_filter() {
+
+		if ( get_theme_mod( 'cpb_pre_filter', '' ) ) {
+
+			add_filter( 'the_content', array( $this, 'do_remove_p' ), 1 );
+
+		} // End if
+
+	} // End check_pre_filter
+
+
+	/*
+	* @desc Removes extra p that WordPress likes to add
+	* @since 3.0.0
+	*
+	* @param string $content Post content
+	*
+	* @return string Post content with shortcodes built out
+	*/
+	public function do_remove_p( $content ) {
+
+		remove_filter( 'the_content', array( $this, 'do_remove_p' ), 1 );
+
+		$content = do_shortcode( $content );
+
+		return $content;
+
+	} // End do_remove_p
 
 
 	/*
@@ -48,21 +84,20 @@ class Shortcodes {
 	*/
 	public function register_shortcodes() {
 
-		// Set shortcodes as global scope
-		global $pagebuilder_shortcodes;
-
-		if ( empty( $pagebuilder_shortcodes ) || ! is_array( $pagebuilder_shortcodes ) ) {
-
-			// Make sure this is set and is an array
-			$pagebuilder_shortcodes = array();
-
-		} // End if
-
 		/*
 		* Shortcodes can be added via cpb_shortcode filter or
 		* the cpb_register_shortcode() (lib/functions/public.php)  function
 		*/
-		$pagebuilder_shortcodes = \apply_filters( 'cpb_shortcodes', $pagebuilder_shortcodes );
+		$register_shortcodes = \apply_filters( 'cpb_shortcodes', array() );
+
+		if ( ! empty( $register_shortcodes ) ) {
+
+			foreach ( $register_shortcodes as $slug => $args ) {
+
+				cpb_register_shortcode( $slug, $args );
+
+			} // End foreach
+		} // End if
 
 	} // End add_shortcodes
 
