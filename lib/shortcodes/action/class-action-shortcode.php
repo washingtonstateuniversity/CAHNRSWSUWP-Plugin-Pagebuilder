@@ -15,12 +15,15 @@ class Action {
 
 	// @var array $default_settings Array of default settings
 	protected $default_settings = array(
-		'label'         => '',
-		'link'          => '#',
-		'textcolor'     => '',
-		'csshook'       => '',
-		'style'         => '',
-		'caption'       => '',
+		'label'             => '',
+		'link'              => '#',
+		'textcolor'         => '',
+		'csshook'           => '',
+		'style'             => '',
+		'caption'           => '',
+		'img_src'           => '', // Lesa
+		'img_id'            => '', // Lesa
+		'stack_vertical'    => '', // Lesa
 	);
 
 
@@ -87,6 +90,12 @@ class Action {
 
 		} // End if
 
+		if ( ! empty( $atts['stack_vertical'] ) ) {
+
+			$class_array[] = 'stack-vertical';
+
+		} // End if // Lesa
+
 		if ( ! empty( $atts['csshook'] ) ) {
 
 			$class_array[] = $atts['csshook'];
@@ -101,6 +110,8 @@ class Action {
 
 		$caption = $atts['caption'];
 
+		$img = $atts['img_src']; // Lesa
+	
 		if ( ! empty( $label ) ) {
 
 			\ob_start();
@@ -131,6 +142,7 @@ class Action {
 
 		$styles = array(
 			''                => 'None',
+			'icon-action'  	  => 'Icon Button', // Lesa
 			'in-page-action'  => 'In Page Button',
 		);
 
@@ -145,6 +157,14 @@ class Action {
 		$html .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'csshook' ), $settings['csshook'], 'CSS Hook' );
 
 		$html .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'style' ), $settings['style'], $styles, 'Style' );
+		
+		$adv .= '<span style="display: block;font-weight: bold;font-size: 0.75rem;color: #555;">Upload Icon</span>'; // Lesa
+
+		$adv .= $cpb_form->insert_media( cpb_get_input_name( $id, true ), $settings); // Lesa
+		
+		$adv .= $cpb_form->checkbox_field( cpb_get_input_name( $id, true, 'stack_vertical' ), 1, $settings['stack_vertical'], 'Stack Vertical'); // Lesa	
+		
+		$adv .= '<hr />'; // Lesa
 
 		$adv .= $cpb_form->textarea_field( cpb_get_input_name( $id, true, 'caption' ), $settings['caption'], 'Link Description' );
 
