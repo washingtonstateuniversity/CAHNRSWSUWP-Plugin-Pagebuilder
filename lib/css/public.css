@@ -1169,6 +1169,76 @@ argin: 0;
 	font-size: 13px;
 	line-height: 18px;
 }
+/* Icon Action Button */
+.cpb-action-button.icon-action {
+	display: block;
+	margin: auto;
+	padding: 0;
+	background-color: #dfe1e2;
+	border: none;
+	border-radius: 2px;
+	color: #464e54;
+	text-align: left;
+	text-decoration: none;
+	font-size: 18px;
+	margin-bottom: .5em;
+}
+.cpb-action-button.icon-action:after {
+	content: none!important;
+	text-decoration: none !important;
+	display: inline-block;
+	vertical-align: middle;
+
+}
+.cpb-action-button.icon-action img {
+	background-color: #981e32;
+		border-radius: 2px 0px 0px 2px;
+	padding: 0px;
+	vertical-align:middle;
+}
+.cpb-action-button.icon-action:hover {
+	border:0;
+}
+
+.cpb-action-button.icon-action .link-title{
+	text-transform:uppercase;
+	padding-left:.5em;
+}
+/* END Icon Action Button */
+
+/* Vertical Icon Action Button */
+
+a.stack-vertical.cpb-action-button.icon-action {
+	background-color: #981e32;
+	border-radius: 2px;
+}
+
+.stack-vertical.cpb-action-button.icon-action.icon-action .link-title {
+	display:block;
+	text-align: center;
+	color:#FFFFFF;
+	background-color: #464e54;
+	border-radius: 0px 0px 2px 2px;
+	padding: .5em 0 .5em 0;
+	}
+.stack-vertical.cpb-action-button.icon-action.icon-action .link-title:hover {
+	color: #dfe1e2;
+	background-color: #464e54;
+}
+
+.stack-vertical.cpb-action-button.icon-action img { 
+	display: block;
+	width: 75px;
+	height:75px;
+	margin: auto;
+	float:none;
+}
+
+.stack-vertical.cpb-action-button.icon-action:hover,.stack-vertical.cpb-action-button.icon-action:hover img {
+	background-color:#464e54;
+}
+
+/* END Vertical Icon Action Button */
 /* cpb-gallery-wrapper
 --------------------------------------------- */
 .cpb-gallery-wrapper .cpb-gallery {
