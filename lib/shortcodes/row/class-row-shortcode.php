@@ -126,6 +126,8 @@ class Row {
 		// Set global layout
 		$cpb_row_layout = $settings['layout'];
 
+		$bg_src = $settings['bg_src'];
+
 		// Set row classes
 		$classes = $this->get_row_classes( $settings );
 
