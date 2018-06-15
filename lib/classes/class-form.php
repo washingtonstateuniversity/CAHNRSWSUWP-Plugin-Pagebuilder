@@ -580,9 +580,17 @@ class Form {
 
 		} // End if
 
-		$form = $this->select_field( $base_name . '[' . $prefix . 'post_type]', $settings[ $prefix . 'post_type' ], $this->get_post_types(), 'Post Type' );
+		$post_types = $this->get_post_types();
 
-		$form .= $this->select_field( $base_name . '[' . $prefix . 'taxonomy]', $settings[ $prefix . 'taxonomy' ], $this->get_taxonomies(), 'Taxonomy' );
+		$post_types['link'] = 'Links';
+
+		$taxonomies = $this->get_taxonomies();
+
+		$taxonomies['link_category'] = 'Link Category';
+
+		$form = $this->select_field( $base_name . '[' . $prefix . 'post_type]', $settings[ $prefix . 'post_type' ], $post_types, 'Post Type' );
+
+		$form .= $this->select_field( $base_name . '[' . $prefix . 'taxonomy]', $settings[ $prefix . 'taxonomy' ], $taxonomies, 'Taxonomy' );
 
 		$form .= $this->text_field( $base_name . '[' . $prefix . 'terms]', $settings[ $prefix . 'terms' ], 'Category/Tag Names' );
 
