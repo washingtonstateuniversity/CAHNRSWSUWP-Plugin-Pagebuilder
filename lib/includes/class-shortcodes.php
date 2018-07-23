@@ -167,6 +167,9 @@ class Shortcodes {
 		// Add Image shortcode
 		include_once cpb_get_plugin_path( '/lib/shortcodes/az-index/class-az-index-shortcode.php' );
 
+		// Add Banner shortcode
+		include_once cpb_get_plugin_path( '/lib/shortcodes/banner/class-banner-shortcode.php' );
+
 	} // End add_shortcodes
 
 
