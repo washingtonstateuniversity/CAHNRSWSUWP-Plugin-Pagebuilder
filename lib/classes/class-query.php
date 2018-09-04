@@ -79,6 +79,10 @@ class Query {
 
 				}
 
+				$item['author'] = \get_the_author_meta( 'display_name' );
+
+				$item['date'] = \get_the_date();
+
 				$item = apply_filters( 'cpb_post_item_array_local_query', $item, $the_query->post );
 
 				$items[ $the_query->post->ID ] = $item;

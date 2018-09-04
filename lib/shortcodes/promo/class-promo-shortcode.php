@@ -34,6 +34,8 @@ class Promo_Shortcode {
 		'csshook'           => '',
 		'post_id'           => '',
 		'offset'            => '',
+		'show_author'       => '',
+		'show_date'         => '',
 	);
 
 
@@ -172,6 +174,20 @@ class Promo_Shortcode {
 				$img_alt = ( ! empty( $promo_item['img_alt'] ) ) ? $promo_item['img_alt'] : '';
 
 				$title = ( ! empty( $promo_item['title'] ) ) ? $promo_item['title'] : '';
+
+				$meta = array();
+
+				if ( ! empty( $promo_item['author'] ) ) {
+
+					$meta[] = 'Posted by ' . $promo_item['author'];
+
+				} // End if
+
+				if ( ! empty( $promo_item['date'] ) ) {
+
+					$meta[] = $promo_item['date'];
+
+				} // End if
 
 				$subtitle = ( ! empty( $promo_item['subtitle'] ) ) ? $promo_item['subtitle'] : '';
 
@@ -364,6 +380,10 @@ class Promo_Shortcode {
 		$display .= $cpb_form->checkbox_field( cpb_get_input_name( $id, true, 'unset_img' ), 1, $settings['unset_img'], 'Hide Image' );
 
 		$display .= $cpb_form->checkbox_field( cpb_get_input_name( $id, true, 'unset_title' ), 1, $settings['unset_title'], 'Hide Title' );
+
+		$display .= $cpb_form->checkbox_field( cpb_get_input_name( $id, true, 'show_author' ), 1, $settings['show_author'], 'Show Author' );
+
+		$display .= $cpb_form->checkbox_field( cpb_get_input_name( $id, true, 'show_date' ), 1, $settings['show_date'], 'Show Date' );
 
 		$display .= $cpb_form->checkbox_field( cpb_get_input_name( $id, true, 'unset_excerpt' ), 1, $settings['unset_excerpt'], 'Hide Summary' );
 
