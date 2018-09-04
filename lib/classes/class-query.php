@@ -232,8 +232,8 @@ class Query {
 			// Remove HTML tags and script/style
 			$excerpt = \wp_strip_all_tags( $excerpt );
 
-			// Shorten to 35 words and convert special characters
-			$excerpt = \htmlspecialchars( \wp_trim_words( $excerpt, 35 ) );
+			// Shorten to 35 words
+			$excerpt = \wp_trim_words( $excerpt, 35 );
 
 			return $excerpt;
 
