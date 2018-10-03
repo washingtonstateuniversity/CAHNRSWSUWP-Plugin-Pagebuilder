@@ -17,6 +17,11 @@ class Slideshow_Shortcode {
 	protected $default_settings = array(
 		'title'         => '',
 		'display_type'   => 'gallery-slideshow',
+		'transition'     => 'slide',
+		'auto_rotate'    => 0,
+		'speed'          => 750,
+		'delay'          => 5000,
+		'css_hook'       => '',
 	);
 
 
@@ -81,15 +86,57 @@ class Slideshow_Shortcode {
 
 		$slides = do_shortcode( $content );
 
+		$display = ( ! empty( $atts['display_type'] ) ) ? $atts['display_type'] : 'gallery-slideshow';
+
+		if ( 'vertical' === $display ) {
+
+			$atts['transition'] = 'slide-vertical';
+
+		} // End if
+
+		$data_attrs = $this->get_data_attrs( $atts );
+
 		\ob_start();
 
-		include __DIR__ . '/slideshow.php';
+		switch ( $display ) {
+
+			case 'vertical':
+				include __DIR__ . '/slideshow-vertical.php';
+				break;
+
+			default:
+				include __DIR__ . '/slideshow.php';
+				break;
+
+		} // End switch
 
 		$html = \ob_get_clean();
 
 		return $html;
 
 	} // End get_rendered_shortcode
+
+
+	private function get_data_attrs( $atts ) {
+
+		$data = array();
+
+		$data_attrs = array(
+			'data-type'       => ( ! empty( $atts['display_type'] ) ) ? $atts['display_type'] : 'gallery-slideshow',
+			'data-transition' => ( ! empty( $atts['transition'] ) ) ? $atts['transition'] : 'slide',
+			'data-autorotate' => ( ! empty( $atts['auto_rotate'] ) ) ? $atts['auto_rotate'] : 0,
+			'data-delay'      => ( ! empty( $atts['delay'] ) ) ? $atts['delay'] : 5000,
+		);
+
+		foreach ( $data_attrs as $attr => $value ) {
+
+			$data[] = $attr . '=' . esc_attr( $value );
+
+		} // End foreach
+
+		return implode( ' ', $data );
+
+	} // end get_data_attrs
 
 
 	/*
@@ -106,8 +153,9 @@ class Slideshow_Shortcode {
 		$cpb_form = cpb_get_form_class();
 
 		$displays = array(
-			'default' => 'Default',
-			'college' => 'College',
+			'default'  => 'Default',
+			'college'  => 'College',
+			'vertical' => 'Vertical Buttons',
 		);
 
 		$html = $cpb_form->text_field( cpb_get_input_name( $id, true, 'title' ), $settings['title'], 'Title' );

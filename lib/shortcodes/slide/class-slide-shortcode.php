@@ -132,7 +132,6 @@ class Slide_Shortcode {
 			}
 
 			switch ( $cpb_slideshow['type'] ) {
-
 				case 'gallery':
 				default:
 					$html .= $this->get_gallery_slide_html( $items, $atts, $cpb_slideshow );
@@ -145,25 +144,57 @@ class Slide_Shortcode {
 
 	} // End get_rendered_shortcode
 
-
 	public function get_gallery_slide_html( $items, $settings ) {
 
 		global $cpb_slideshow;
 
 		$html = '';
 
-		foreach ( $items as $item ) {
+		foreach ( $items as $index => $item ) {
 
-			$active = ( 1 === $cpb_slideshow['i'] ) ? ' active-slide' : '';
+			$active = ( 2 === $cpb_slideshow['i'] ) ? ' active-slide' : '';
 			$bg_image = esc_url( $item['img'] );
-			$img = '<img class="slide_img_bg" src="' . esc_url( cpb_get_plugin_url( 'lib/images/spacer1x1.gif' ) ) . '" style="background-image:url( ' . $bg_image . ' )" />';
+			$bg_image_class = ( ! empty( $bg_image ) ) ? 'has-image' : '';
+			$img = '<img class="slide_img_bg ' . esc_attr( $bg_image_class ) . '" src="' . esc_url( cpb_get_plugin_url( 'lib/images/spacer1x1.gif' ) ) . '" style="background-image:url( ' . $bg_image . ' )" />';
 			$link = ( $item['link'] ) ? '<a href="' . esc_url( $item['link'] ) . '" class="slide-link" /></a>' : '';
 			$title = $item['title'];
 			$excerpt = wp_trim_words( $item['excerpt'], 35 );
+			$slide_index = 'slide-' . $index;
+
+			$slide_class = '';
+
+			if ( 'vertical' === $cpb_slideshow['type'] ) {
+
+				if ( empty( $bg_image ) ) {
+
+					$img = '';
+					
+				} // End if
+
+				if ( 1 === $cpb_slideshow['i'] ) {
+
+					$slide_class = 'before-slide';
+
+				} else if ( 3 === $cpb_slideshow['i'] ) {
+
+					$slide_class = 'after-slide';
+
+				} // End if
+			} // End if
 
 			ob_start();
 
-			include __DIR__ . '/slide.php';
+			switch ( $cpb_slideshow['type'] ) {
+
+				case 'vertical':
+					include __DIR__ . '/slide-vertical.php';
+					break;
+
+				default:
+					include __DIR__ . '/slide.php';
+					break;
+
+			} // End switch
 
 			$html .= ob_get_clean();
 
