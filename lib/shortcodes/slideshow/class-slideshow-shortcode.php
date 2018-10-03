@@ -22,6 +22,7 @@ class Slideshow_Shortcode {
 		'speed'          => 750,
 		'delay'          => 5000,
 		'change_mobile'  => 'none',
+		'breakpoint'     => 700,
 		'css_hook'       => '',
 	);
 
@@ -128,6 +129,7 @@ class Slideshow_Shortcode {
 			'data-autorotate' => ( ! empty( $atts['auto_rotate'] ) ) ? $atts['auto_rotate'] : 0,
 			'data-delay'      => ( ! empty( $atts['delay'] ) ) ? $atts['delay'] : 5000,
 			'data-changem'    => ( ! empty( $atts['change_mobile'] ) ) ? $atts['change_mobile'] : 'none',
+			'data-breakpoint' => ( ! empty( $atts['breakpoint'] ) ) ? $atts['breakpoint'] : '700',
 		);
 
 		foreach ( $data_attrs as $attr => $value ) {
@@ -162,11 +164,13 @@ class Slideshow_Shortcode {
 
 		$html = $cpb_form->text_field( cpb_get_input_name( $id, true, 'title' ), $settings['title'], 'Title' );
 
-		$html .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'change_mobile' ), $settings['change_mobile'], 'Change Mobile' );
+		$mobile = $cpb_form->text_field( cpb_get_input_name( $id, true, 'change_mobile' ), $settings['change_mobile'], 'Change Mobile' );
+
+		$mobile .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'breakpoint' ), $settings['breakpoint'], 'Mobile Breakpoint (in px)' );
 
 		$html .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'display_type' ), $settings['display_type'], $displays, 'Display Type' );
 
-		return array( 'Basic' => $html );
+		return array( 'Basic' => $html, 'Mobile' => $mobile );
 
 	} // End get_shortcode_form
 
