@@ -21,6 +21,7 @@ class Slideshow_Shortcode {
 		'auto_rotate'    => 0,
 		'speed'          => 750,
 		'delay'          => 5000,
+		'change_mobile'  => 'none',
 		'css_hook'       => '',
 	);
 
@@ -126,6 +127,7 @@ class Slideshow_Shortcode {
 			'data-transition' => ( ! empty( $atts['transition'] ) ) ? $atts['transition'] : 'slide',
 			'data-autorotate' => ( ! empty( $atts['auto_rotate'] ) ) ? $atts['auto_rotate'] : 0,
 			'data-delay'      => ( ! empty( $atts['delay'] ) ) ? $atts['delay'] : 5000,
+			'data-changem'    => ( ! empty( $atts['change_mobile'] ) ) ? $atts['change_mobile'] : 'none',
 		);
 
 		foreach ( $data_attrs as $attr => $value ) {
@@ -159,6 +161,8 @@ class Slideshow_Shortcode {
 		);
 
 		$html = $cpb_form->text_field( cpb_get_input_name( $id, true, 'title' ), $settings['title'], 'Title' );
+
+		$html .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'change_mobile' ), $settings['change_mobile'], 'Change Mobile' );
 
 		$html .= $cpb_form->select_field( cpb_get_input_name( $id, true, 'display_type' ), $settings['display_type'], $displays, 'Display Type' );
 

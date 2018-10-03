@@ -706,7 +706,7 @@ Items
 	display: block;
 	list-style-type: none;
 	background: #fff;
-	border: 1px solid #981e32;
+	border: 2px solid #981e32;
 	padding: 18px 8px;
 
 	box-sizing: border-box;
@@ -743,6 +743,7 @@ Items
   font-size: 0;
   z-index: 100;
   left: 50%;
+  transform: translate(-20px,0);
 }
 .cpb-slideshow.vertical nav.slideshow-primary .prev{
 	position: absolute;
@@ -756,6 +757,7 @@ Items
   font-size: 0;
   z-index: 100;
   left: 50%;
+  transform: translate(-20px,0);
 }
 
 
