@@ -146,7 +146,7 @@ class AJAX {
 
 				if ( ! empty( $_POST[ '_cpb_content_' . $id ] ) ) {
 
-					$content = wp_kses_post( $_POST[ '_cpb_content_' . $id ] );
+					$content = wp_kses_post( stripslashes( $_POST[ '_cpb_content_' . $id ] ) );
 
 				} else {
 
