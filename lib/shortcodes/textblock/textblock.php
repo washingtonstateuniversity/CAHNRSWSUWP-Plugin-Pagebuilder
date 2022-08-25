@@ -2,6 +2,6 @@
 
 ?><div class="cpb-textblock cpb-item <?php echo esc_html( $classes ); ?>"><?php
 	// @codingStandardsIgnoreStart Already escaped
-	echo $content;
+	echo "<p>$content</p>";
 	//@codingStandardsIgnoreEnd
 ?></div>
