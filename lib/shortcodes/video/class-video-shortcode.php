@@ -17,6 +17,7 @@ class Video_Shortcode {
 	protected $default_settings = array(
 		'vid_id'        => '',
 		'vid_type'      => '',
+		'vid_summary' 	=> ''
 	);
 
 
@@ -78,12 +79,14 @@ class Video_Shortcode {
 
 				case 'vimeo':
 					$video_id = $atts['vid_id'];
+					$video_summary = $this->get_video_id_from_url( $atts['vid_summary'] );
 					ob_start();
 					include __DIR__ . '/vimeo-video.php';
 					$html .= ob_get_clean();
 					break;
 				default:
 					$video_id = $this->get_video_id_from_url( $atts['vid_id'] );
+					$video_summary = $this->get_video_id_from_url( $atts['vid_summary'] );
 					ob_start();
 					include __DIR__ . '/youtube-video.php';
 					$html .= ob_get_clean();
@@ -185,13 +188,26 @@ class Video_Shortcode {
 
 		$cpb_form = cpb_get_form_class();
 
+		$form_custom  = '<div class="cpb-form">';
+
+		if($settings['vid_type'] == 'youtube'){
+			$form_custom .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'vid_id' ), $settings['vid_id'], 'YouTube Video ID' );
+		}else{
+			$form_custom .= $cpb_form->text_field( cpb_get_input_name( $id, true, 'vid_id' ), $settings['vid_id'], 'Vimeo Video ID' );
+		}
+		
+		$form_custom .= $cpb_form->textarea_field( cpb_get_input_name( $id, true, 'vid_summary' ), $settings['vid_summary'], 'Video Description', 'cpb-full-width' );
+		
+
+		$form_custom .= '</div>';
+
 		$youtube_form = array(
 			'name'    => cpb_get_input_name( $id, true, 'vid_type' ),
 			'value'   => 'youtube',
 			'selected' => $settings['vid_type'],
 			'title'   => 'YouTube Video',
 			'desc'    => 'Display YouTube video by ID',
-			'form'    => $cpb_form->text_field( cpb_get_input_name( $id, true, 'vid_id' ), $settings['vid_id'], 'YouTube Video ID' ),
+			'form'    => $form_custom,
 		);
 
 		$vimeo_form = array(
@@ -200,7 +216,7 @@ class Video_Shortcode {
 			'selected' => $settings['vid_type'],
 			'title'   => 'Vimeo Video',
 			'desc'    => 'Display Vimeo video by ID',
-			'form'    => $cpb_form->text_field( cpb_get_input_name( $id, true, 'vid_id' ), $settings['vid_id'], 'Vimeo Video ID' ),
+			'form'    => $form_custom,
 		);
 
 		$html = $cpb_form->multi_form( array( $youtube_form, $vimeo_form ) );
